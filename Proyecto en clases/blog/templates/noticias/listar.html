@@ -10,6 +10,8 @@
         {% endfor %}
         <a href="?antiguedad_asc=1">Mas antiguas primero</a>
         <a href="?antiguedad_des=1">Mas recientes primero</a>
+        <a href="?orden_asc=1">A-Z</a>
+        <a href="?orden_des=1">Z-A</a
     </div>
     {% for noticia in noticias %}
         <h3><a href="{% url 'noticias:detalle' noticia.pk %}">Titulo: {{noticia.titulo}}</a></h3>

@@ -10,14 +10,22 @@ def ListarNoticias(request):
     else:
         n = Noticia.objects.all().order_by('fecha_publicacion')
     
-    
     antiguedad_asc = request.GET.get("antiguedad_asc")
     if antiguedad_asc:
-        cat = Noticia.objects.all().order_by('fecha_publicacion')
+        n = Noticia.objects.all().order_by('fecha_publicacion')
 
     antiguedad_des = request.GET.get("antiguedad_des")
     if antiguedad_des:
-        cat = Noticia.objects.all().order_by('-fecha_publicacion')
+        n = Noticia.objects.all().order_by('-fecha_publicacion')
+
+    
+    orden_asc = request.GET.get("orden_asc")
+    if orden_asc:
+        n = Noticia.objects.all().order_by('titulo')
+
+    orden_des = request.GET.get("orden_des")
+    if orden_des:
+        n = Noticia.objects.all().order_by('-titulo')
 
     cat = Categoria.objects.all().order_by('nombre')
 
