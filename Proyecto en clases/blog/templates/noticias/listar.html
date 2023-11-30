@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Noticias{% endblock titulo %}
+{% block contenido %}
+    <h2>Estas son mis noticias</h2>
+    <div class="submenu">
+        <a href="{% url 'noticias:listar' %}">TODAS</a>
+        {% for cat in categorias %}
+            <a href="?id={{cat.pk}}">{{cat.nombre}}</a>
+        {% endfor %}
+        <a href="?antiguedad_asc=1">Mas antiguas primero</a>
+        <a href="?antiguedad_des=1">Mas recientes primero</a>
+    </div>
+    {% for noticia in noticias %}
+        <h3><a href="{% url 'noticias:detalle' noticia.pk %}">Titulo: {{noticia.titulo}}</a></h3>
+        <p>{{noticia.contenido}}</p>
+        <img src="{{noticia.imagenes.url}}">
+        <p>{{noticia.fecha_publicacion}}</p>
+        <p>{{noticia.categoria_noticia}}</p>
+        <br>
+    {% endfor %}
+
+{% endblock contenido %}
