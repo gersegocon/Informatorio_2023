@@ -4,33 +4,28 @@ from .models import Noticia, Categoria
 def ListarNoticias(request):
     contexto = {}
     id_categoria = request.GET.get("id", None)
+    antiguedad = request.GET.get("antiguedad", None)
+    orden = request.GET.get("orden", None)
+
+    n = Noticia.objects.all()
 
     if id_categoria:
-        n = Noticia.objects.filter(categoria_noticia=id_categoria).order_by('fecha_publicacion')
-    else:
-        n = Noticia.objects.all().order_by('fecha_publicacion')
-    
-    antiguedad_asc = request.GET.get("antiguedad_asc")
-    if antiguedad_asc:
-        n = Noticia.objects.all().order_by('fecha_publicacion')
+        n = n.filter(categoria_noticia=id_categoria)
 
-    antiguedad_des = request.GET.get("antiguedad_des")
-    if antiguedad_des:
-        n = Noticia.objects.all().order_by('-fecha_publicacion')
+    if antiguedad == "asc":
+        n = n.order_by('fecha_publicacion')
+    elif antiguedad == "desc":
+        n = n.order_by('-fecha_publicacion')
 
-    
-    orden_asc = request.GET.get("orden_asc")
-    if orden_asc:
-        n = Noticia.objects.all().order_by('titulo')
+    if orden == "asc":
+        n = n.order_by('titulo')
+    elif orden == "desc":
+        n = n.order_by('-titulo')
 
-    orden_des = request.GET.get("orden_des")
-    if orden_des:
-        n = Noticia.objects.all().order_by('-titulo')
-
-    cat = Categoria.objects.all().order_by('nombre')
-
-    contexto['noticias'] = n
-    contexto['categorias'] = cat
+    contexto = {
+        'noticias': n,
+        'categorias': Categoria.objects.all(),
+    }
 
     return render(request, 'noticias/listar.html', contexto)
 

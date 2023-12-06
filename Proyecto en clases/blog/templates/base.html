@@ -15,5 +15,12 @@
     <a href="{% url 'nosotros' %}">IR A NOSOTROS</a>
     <a href="{% url 'home' %}">VOLVER AL INICIO</a>
     <a href="{% url 'noticias:listar' %}">NOTICIAS</a>
+    {% if user.is_authenticated %}
+        <strong>Hola {{user.username}}</strong>
+        <a href="{% url 'usuarios:logout' %}">LOGOUT</a>
+    {% else  %}
+        <a href="{% url 'usuarios:login' %}">LOGIN</a>
+        <a href="{% url 'usuarios:registro' %}">REGISTRO</a>
+    {% endif %}
 </body>
 </html>
