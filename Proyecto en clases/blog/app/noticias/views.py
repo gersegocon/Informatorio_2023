@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from .models import Noticia, Categoria
+from .forms import NoticiaForm
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def ListarNoticias(request):
     contexto = {}
@@ -36,5 +40,25 @@ def DetalleNoticias(request, pk):
     
     contexto['noticias'] = n
 
-    return render(request, 'noticias/detalle.html', contexto)
+    #BORRAR NOTICIA
+    if request.method == 'POST' and 'delete_noticia' in request.POST:
+        n.delete()
+        return redirect('noticias:listar')
+
+    return render (request, 'noticias/detalle.html', contexto)
+
+@login_required
+def AddNoticia(request):
+    if request.method == 'POST':
+        form = NoticiaForm(request.POST or None, request.FILES) ##Request files es para las imagenes
+
+        if form.is_valid():
+            noticia = form.save(commit=False)
+            noticia.autor = request.user
+            form.save()
+            return redirect('home')
+    else:
+        form = NoticiaForm()
+
+    return render (request, 'noticias/addNoticia.html', {'form':form})
 
