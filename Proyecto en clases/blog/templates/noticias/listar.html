@@ -2,7 +2,7 @@
 {% load static %}
 {% block titulo %}Noticias{% endblock titulo %}
 {% block contenido %}
-    <h2>Estas son mis noticias</h2>
+    <h2>aca estan mis noticias !</h2>
     <form method="get" action="{% url 'noticias:listar'%}">
         <select name="id">
             <option value="">Todas</option>
@@ -24,14 +24,10 @@
         </select>
         
         <input type="submit" value="Filtrar">
-    </form>   
-    </div>
+    </form>    
     {% for noticia in noticias %}
         <h3><a href="{% url 'noticias:detalle' noticia.pk %}">Titulo: {{noticia.titulo}}</a></h3>
-        <p>{{noticia.contenido}}</p>
-        <img src="{{noticia.imagenes.url}}">
-        <p>{{noticia.fecha_publicacion}}</p>
-        <p>{{noticia.categoria_noticia}}</p>
+        <img src="{{noticia.imagenes.url}}" width="10%">
         <br>
     {% endfor %}
 

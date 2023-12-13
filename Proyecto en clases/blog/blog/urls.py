@@ -17,14 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('', views.Home, name='home'),
-     path('nosotros/', views.Nosotros, name='nosotros'),
-     path('noticias/', include('app.noticias.urls')),
-     path('usuarios/', include('app.usuarios.urls')),
-   
+    path('', views.Home, name='home'),
+    path('nosotros/', views.Nosotros, name='nosotros'),
+    path('noticias/', include('apps.noticias.urls')),
+    path('usuarios/', include('apps.usuarios.urls')),
+    #parametro 1: es el texto de la url
+    #parametro 2: la vista que se va a ejecutar
+    #parametro 3: el nombre de la url
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
